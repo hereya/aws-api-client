@@ -45,3 +45,11 @@ output "REKOGNITION_LIVENESS_ROLE_ARN" {
 output "IAM_POLICY_REKOGNITION" {
   value = contains(var.permissions, "rekognition") ? module.rekognition.0.policy : null
 }
+
+output "IAM_POLICY_SSM_PARAMETER_STORE" {
+  value = contains(var.permissions, "ssm_parameter_store") ? module.ssm_parameter_store.0.policy : null
+}
+
+output "SSM_PARAMETER_STORE_PATH_PREFIX" {
+  value = contains(var.permissions, "ssm_parameter_store") ? module.ssm_parameter_store.0.path_prefix : null
+}

@@ -82,3 +82,15 @@ resource "aws_iam_user_policy" "rekognition" {
     user   = aws_iam_user.client.0.name
     policy = module.rekognition.0.policy
 }
+
+module "ssm_parameter_store" {
+  source      = "./modules/ssm_parameter_store"
+  count       = contains(var.permissions, "ssm_parameter_store") ? 1 : 0
+  path_prefix = var.ssm_parameter_store_path_prefix
+}
+
+resource "aws_iam_user_policy" "ssm_parameter_store" {
+  count  = contains(var.permissions, "ssm_parameter_store") && var.export_credentials ? 1 : 0
+  user   = aws_iam_user.client.0.name
+  policy = module.ssm_parameter_store.0.policy
+}

@@ -34,3 +34,9 @@ variable "s3_bucket_name_prefix" {
   description = "The prefix of the S3 bucket name"
   default     = ""
 }
+
+variable "ssm_parameter_store_path_prefix" {
+  type        = string
+  description = "The path prefix for SSM parameters"
+  default     = null
+}

@@ -35,6 +35,12 @@ variable "s3_bucket_name_prefix" {
   default     = ""
 }
 
+variable "s3_cors_allowed_origins" {
+  description = "Browser origins allowed to upload/download directly to the S3 bucket via presigned PUT/GET. Empty list disables CORS."
+  type        = list(string)
+  default     = []
+}
+
 variable "ssm_parameter_store_path_prefix" {
   type        = string
   description = "The path prefix for SSM parameters"

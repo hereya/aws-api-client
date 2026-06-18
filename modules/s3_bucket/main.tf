@@ -39,3 +39,19 @@ data "aws_iam_policy_document" "permissions" {
     resources = [aws_s3_bucket.this.arn]
   }
 }
+
+# Allow browsers on the given origins to upload/download directly via presigned
+# URLs (PUT/GET). Only created when at least one origin is provided, so existing
+# consumers that don't set cors_allowed_origins are unaffected.
+resource "aws_s3_bucket_cors_configuration" "this" {
+  count  = length(var.cors_allowed_origins) > 0 ? 1 : 0
+  bucket = aws_s3_bucket.this.id
+
+  cors_rule {
+    allowed_origins = var.cors_allowed_origins
+    allowed_methods = ["PUT", "GET", "HEAD"]
+    allowed_headers = ["*"]
+    expose_headers  = ["ETag"]
+    max_age_seconds = 3000
+  }
+}

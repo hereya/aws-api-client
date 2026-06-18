@@ -61,9 +61,10 @@ resource "aws_iam_user_policy" "location_api" {
 }
 
 module "s3_bucket" {
-  source      = "./modules/s3_bucket"
-  count       = contains(var.permissions, "s3_bucket") ? 1 : 0
-  name_prefix = var.s3_bucket_name_prefix
+  source               = "./modules/s3_bucket"
+  count                = contains(var.permissions, "s3_bucket") ? 1 : 0
+  name_prefix          = var.s3_bucket_name_prefix
+  cors_allowed_origins = var.s3_cors_allowed_origins
 }
 
 resource "aws_iam_user_policy" "s3_bucket" {
